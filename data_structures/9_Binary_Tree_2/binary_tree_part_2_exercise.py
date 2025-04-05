@@ -1,3 +1,4 @@
+from collections import deque
 
 class BinarySearchTreeNode():
     def __init__(self, data):
@@ -21,44 +22,62 @@ class BinarySearchTreeNode():
             else:
                 self.right = BinarySearchTreeNode(data)
 
-    def in_order_traversal(self):
+    def dfs_in_order_traversal(self):
         elements = []
 
         if self.left:
-            elements += self.left.in_order_traversal()
+            elements += self.left.dfs_in_order_traversal()
         
         elements.append(self.data)
         
         if self.right:
-            elements += self.right.in_order_traversal()
+            elements += self.right.dfs_in_order_traversal()
 
         return elements
 
-    def pre_order_traversal(self):
+    def dfs_pre_order_traversal(self):
         elements = []
         
         elements.append(self.data)
 
         if self.left:
-            elements += self.left.pre_order_traversal()
+            elements += self.left.dfs_pre_order_traversal()
         
         if self.right:
-            elements += self.right.pre_order_traversal()
+            elements += self.right.dfs_pre_order_traversal()
 
         return elements
 
-    def post_order_traversal(self):
+    def dfs_post_order_traversal(self):
         elements = []
 
         if self.left:
-            elements += self.left.post_order_traversal()
+            elements += self.left.dfs_post_order_traversal()
         
         if self.right:
-            elements += self.right.post_order_traversal()
+            elements += self.right.dfs_post_order_traversal()
         
         elements.append(self.data)
 
         return elements
+    
+    def bfs_traversal(self):
+        elements = []
+        queue = deque()
+        queue.append(self)
+
+        while len(queue) > 0:
+            current_node = queue.popleft()
+            elements.append(current_node.data)
+
+            if current_node.left:
+                queue.append(current_node.left)
+            
+            if current_node.right:
+                queue.append(current_node.right)
+
+        return elements
+            
     
     def search(self, data):
         if self.data == data:
@@ -87,7 +106,7 @@ class BinarySearchTreeNode():
         return self.left.find_max()
 
     def calculate_sum(self):
-        return sum(self.in_order_traversal())
+        return sum(self.dfs_in_order_traversal())
     
     def delete(self, val):
         if val < self.data:
@@ -147,9 +166,10 @@ if __name__ == '__main__':
 
     numbers_tree = build_tree(numbers)
     print("Input numbers:",numbers)
-    print("In order traversal:", numbers_tree.in_order_traversal())
+    print("DFS - in order traversal:", numbers_tree.dfs_in_order_traversal())
+    print("BFS - traversal:", numbers_tree.bfs_traversal())
     numbers_tree.delete_alt(20)
-    print("After deleting 20: ", numbers_tree.in_order_traversal())
+    print("After deleting 20: ", numbers_tree.dfs_in_order_traversal())
 
 
 

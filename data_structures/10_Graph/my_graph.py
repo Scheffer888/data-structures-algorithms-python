@@ -29,9 +29,23 @@ class Graph():
 
         return paths
 
-    def get_shortest_paths(self, ):
-        pass
+    def get_shortest_path(self, start, end, path=[]):
+        path = path + [start]
 
+        if start == end:
+            return path
+
+        if start not in self.graph_dict:
+            return None
+
+        shortest_path = None
+        for node in self.graph_dict[start]:
+            if node not in path:
+                sp = self.get_shortest_path(node, end, path)
+                if sp:
+                    if shortest_path is None or len(sp) < len(shortest_path):
+                        shortest_path = sp
+        return shortest_path
 
 if __name__ == '__main__':
 
@@ -49,11 +63,11 @@ if __name__ == '__main__':
     start = "Mumbai"
     end = "Mumbai"
 
-    print(f"All paths between: {start} and {end}: ",route_graph.get_paths(start,end))
-    #print(f"Shortest path between {start} and {end}: ", route_graph.get_shortest_path(start,end))
+    print(f"\nAll paths between: {start} and {end}:\n" + '\n'.join([' -> '.join(path) for path in route_graph.get_paths(start, end)]))
+    print(f"\nShortest path between {start} and {end}:\n" + ' -> '.join(route_graph.get_shortest_path(start,end)))
 
-    start = "Paris"
-    end = "Toronto"
+    start = "Mumbai"
+    end = "New York"
 
-    print(f"All paths between: {start} and {end}: ",route_graph.get_paths(start,end))
-    #print(f"Shortest path between {start} and {end}: ", route_graph.get_shortest_path(start,end))
+    print(f"\nAll paths between: {start} and {end}:\n" + '\n'.join([' -> '.join(path) for path in route_graph.get_paths(start, end)]))
+    print(f"\nShortest path between {start} and {end}:\n" + ' -> '.join(route_graph.get_shortest_path(start,end)))

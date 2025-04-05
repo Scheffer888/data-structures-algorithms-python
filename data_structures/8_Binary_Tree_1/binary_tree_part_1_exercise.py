@@ -83,7 +83,7 @@ class BinarySearchTreeNode():
     def find_min(self):
         if self.left is None:
             return self.data
-        return self.left.find_max()
+        return self.left.find_min()
 
     def calculate_sum(self):
         return sum(self.in_order_traversal())

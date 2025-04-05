@@ -1,7 +1,7 @@
 
 from collections import deque
 
-class Queue:
+class dQueue:
     def __init__(self):
         self.buffer = deque()
 
@@ -27,7 +27,7 @@ class Queue:
     
 
 def print_binary(end):
-    queue = Queue()
+    queue = dQueue()
     queue.enqueue('1')
 
     for i in range(end):
@@ -36,10 +36,23 @@ def print_binary(end):
 
         queue.enqueue(binary_number + '0')
         queue.enqueue(binary_number + '1')
-    
 
+# Using queue python library
+from queue import Queue
+def print_binary_2(end):
+    queue = Queue()
+    queue.put('1')
+
+    for i in range(end):
+        binary_number = queue.get()
+        print('   ' + binary_number)
+
+        queue.put(binary_number + '0')
+        queue.put(binary_number + '1')
 
     
 if __name__ == '__main__':
 
     print_binary(12)
+    print()
+    print_binary_2(12)
